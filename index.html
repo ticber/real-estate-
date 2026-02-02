@@ -1,0 +1,2725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Ber Estates Ltd - Professional Property Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Updated Color Palette from ColorHunt: #005461 #018790 #00B7B5 #F4F4F4 */
+            --primary-color: #005461;      /* Dark Teal */
+            --secondary-color: #00B7B5;    /* Bright Teal */
+            --accent-color: #018790;       /* Medium Teal */
+            --light-color: #F4F4F4;        /* Light Gray */
+            --dark-color: #00292E;         /* Darker version for contrast */
+            --text-color: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0, 87, 94, 0.1);
+            --transition: all 0.3s ease;
+            --border-radius: 8px;
+            --header-height: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #fff;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 70px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: var(--text-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-center h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title {
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .loading-logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: var(--light-color);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .loading-percentage {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 84, 97, 0.1);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: var(--primary-color);
+        }
+
+        .logo-text span {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            padding: 10px;
+            border-radius: var(--border-radius);
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn:hover {
+            background-color: rgba(0, 84, 97, 0.1);
+        }
+
+        /* Floating Social Media FABs */
+        .social-fabs {
+            position: fixed;
+            right: 20px;
+            top: 70%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+            background-color: white;
+            padding: 15px 10px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .social-fab {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-fab:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-fab.facebook {
+            background-color: #1877F2;
+        }
+
+        .social-fab.twitter {
+            background-color: #000000;
+        }
+
+        .social-fab.instagram {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+        }
+
+        .social-fab.linkedin {
+            background-color: #0077B5;
+        }
+
+        .social-fab.tiktok {
+            background-color: #000000;
+        }
+
+        .social-fab.whatsapp {
+            background-color: #25D366;
+        }
+
+        /* Hero Section with MP4 Video */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.952) 0%, rgba(1, 135, 144, 0.493) 100%);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .hero-content .motto {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btns .btn {
+            padding: 15px 35px;
+            font-size: 1rem;
+        }
+
+        /* Service Navigation */
+        .service-nav {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            z-index: 4;
+        }
+
+        .service-index {
+            font-size: 6rem;
+            font-weight: 900;
+            margin-right: 2rem;
+            letter-spacing: 5px;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-prev, .nav-next {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0.9;
+        }
+
+        .nav-prev:hover, .nav-next:hover {
+            color: var(--secondary-color);
+            opacity: 1;
+        }
+
+        .nav-prev i, .nav-next i {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.4);
+            margin: 0.5rem 0;
+        }
+
+        /* Loading indicator for service switching */
+        .service-loading {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--light-color);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 87, 94, 0.15);
+        }
+
+        .feature-item i {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .about-image {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about-image img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Services Sections */
+        .services-section {
+            background-color: white;
+        }
+
+        .services-section:nth-child(even) {
+            background-color: var(--light-color);
+        }
+
+        .service-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .service-detail.reverse {
+            direction: rtl;
+        }
+
+        .service-detail.reverse .service-description {
+            direction: ltr;
+        }
+
+        .service-image-large {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .service-image-large img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .service-image-large:hover img {
+            transform: scale(1.05);
+        }
+
+        .service-description h3 {
+            margin-bottom: 20px;
+        }
+
+        .service-description ul {
+            margin-bottom: 25px;
+        }
+
+        .service-description li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+            color: var(--text-color);
+        }
+
+        .service-description li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Service Gallery */
+        .service-gallery-section {
+            margin-top: 50px;
+        }
+
+        .gallery-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0px;
+            text-align: center;
+        }
+
+        .service-gallery {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 87, 94, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+       .gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 84, 97, 0.9), transparent);
+    color: white;
+    padding: 20px 15px;
+    transform: translateY(100%);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Add space between title and description */
+}
+        .gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+        .gallery-overlay span {
+    font-size: 1rem;
+    font-weight: 600; /* Make title bolder for better hierarchy */
+    display: block;
+    margin-bottom: 5px; /* Reduced margin since we're using gap */
+    line-height: 1.2;
+}
+
+        .gallery-description {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    font-style: italic;
+    line-height: 1.3;
+    display: -webkit-box;
+   
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .gallery-overlay {
+        padding: 15px 12px;
+    }
+    
+    .gallery-overlay span {
+        font-size: 0.95rem;
+    }
+    
+    .gallery-description {
+        font-size: 0.8rem;
+       
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-overlay {
+        padding: 12px 10px;
+        gap: 6px;
+    }
+    
+    .gallery-overlay span {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+    
+    .gallery-description {
+        font-size: 0.75rem;
+       
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 576px) {
+    .gallery-overlay {
+        padding: 10px 8px;
+        gap: 4px;
+    }
+    
+    .gallery-overlay span {
+        font-size: 0.85rem;
+    }
+    
+    .gallery-description {
+        font-size: 0.7rem;
+      
+        line-height: 1.1;
+    }
+}
+        /* Why Choose Us */
+        .why-us {
+            background-color: var(--light-color);
+        }
+
+        .why-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .why-card {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 183, 181, 0.1);
+        }
+
+        .why-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 87, 94, 0.15);
+            border-color: var(--secondary-color);
+        }
+
+        .why-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(0, 183, 181, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: var(--transition);
+        }
+
+        .why-card:hover .why-icon {
+            background-color: var(--secondary-color);
+        }
+
+        .why-icon i {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .why-card:hover .why-icon i {
+            color: white;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover .contact-icon {
+            background-color: var(--secondary-color);
+        }
+
+        .contact-icon i {
+            color: white;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover .contact-icon i {
+            transform: scale(1.1);
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(0, 183, 181, 0.2);
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-icon-link {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-icon-link:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-links h4,
+        .footer-services h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul li,
+        .footer-services ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a,
+        .footer-services a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover,
+        .footer-services a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Modal for image gallery */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 84, 97, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--secondary-color);
+        }
+
+        .modal-title {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            color: white;
+            font-size: 1.2rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        .modal-description {
+            position: absolute;
+            bottom: -70px;
+            left: 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+            display: none;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+
+        .modal-nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-nav-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .service-index {
+                font-size: 4rem;
+            }
+            
+            .service-gallery {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .social-fabs {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .about-content,
+            .contact-content,
+            .service-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .service-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .service-nav {
+                right: 3%;
+            }
+            
+            .service-detail.reverse {
+                direction: ltr;
+            }
+            
+           .social-fab {
+                right: 10px;
+                width: 45px;
+                height: 45px;
+            } 
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 10px 10px rgba(0, 84, 97, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content .motto {
+                font-size: 1.5rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .service-nav {
+                flex-direction: column;
+                right: 3%;
+                transform: none;
+                top: auto;
+                bottom: 15%;
+            }
+            
+            .service-index {
+                margin-right: 0;
+                margin-bottom: 1rem;
+                font-size: 3rem;
+            }
+            
+            .gallery-item img {
+                height: 300px;
+            }
+            
+            .social-fabs {
+                right: 10px;
+                padding: 10px 8px;
+            }
+            
+            .social-fab {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-content .motto {
+                font-size: 1.2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .loading-logo {
+                font-size: 2.5rem;
+                letter-spacing: 5px;
+            }
+            
+            .service-index {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-item img {
+                height: 250px;
+            }
+            
+            .social-fabs {
+                right: 5px;
+                padding: 8px 5px;
+            }
+            
+            .social-fab {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-logo">Tic Ber Estates Ltd</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <div class="loading-percentage" id="loading-percentage">0%</div>
+    </div>
+    
+    <!-- Floating Social Media FABs -->
+    <div class="social-fabs" id="socialFabs">
+        <a href="https://www.facebook.com/share/1CNQDqtbur/?mibextid=wwXIfr" target="_blank" class="social-fab facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://x.com/tic_ber2?s=11" target="_blank" class="social-fab twitter">
+    <i class="fab fa-x"></i>
+</a>
+        <a href="https://www.instagram.com/ticberestateslimited?igsh=MTZ4OWp4cnNjYnR2MQ%3D%3D&utm_source=qr" target="_blank" class="social-fab instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/tic-ber-estates-limited/" target="_blank" class="social-fab linkedin">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://www.tiktok.com/@tic.ber.estates.l?_r=1&_t=ZS-93PqRQuo9Z7" target="_blank" class="social-fab tiktok">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://wa.me/256703756234" target="_blank" class="social-fab whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Tic BER Estates Ltd Logo" class="logo-img">
+                <div class="logo-text">
+                    <h1>Tic Ber Estates Ltd</h1>
+                    <span>Professional Property Management</span>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#service-1">Tenant Management</a>
+                <a href="#service-2">Rent Collection</a>
+                <a href="#service-3">Property Maintenance</a>
+                <a href="#service-4">Residential & Commercial</a>
+                <a href="#service-5">Additional Services</a>
+                <a href="#why-us">Why Choose Us</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with MP4 Video -->
+    <section class="hero" id="home">
+        <!-- Video Container -->
+        <div class="video-container">
+            <video autoplay muted loop playsinline class="hero-video" id="heroVideo">
+                <source src="images/hero.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <!-- Service Loading Indicator -->
+        <div class="service-loading" id="serviceLoading"></div>
+        
+        <!-- Hero Overlay -->
+        <div class="hero-overlay">
+            <div class="hero-content container">
+                <h1>Tic Ber Estates Ltd</h1>
+                <p class="motto">"Invest Smart. Live Better."</p>
+                <p>Professional property management solutions in Kampala. We help landlords protect their investments, maintain their properties, and enjoy steady income without day-to-day involvement.</p>
+                <div class="hero-btns">
+                    <a href="#service-1" class="btn btn-primary">Our Services</a>
+                    <a href="#contact" class="btn btn-secondary">Contact Us</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Navigation -->
+        <div class="service-nav">
+            <div class="service-index" id="service-index">01</div>
+            <div class="nav-controls">
+                <div class="nav-prev" id="prev-service">
+                    <i class="fas fa-chevron-up"></i>
+                    <span>PREV</span>
+                </div>
+                <div class="nav-divider"></div>
+                <div class="nav-next" id="next-service">
+                    <span>NEXT</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Us</h2>
+                    <p>We are a professional property management company based in Kampala, providing reliable and stress-free management solutions for property owners.</p>
+                    <p>Our goal is to help landlords protect their investments, maintain their properties, and enjoy steady income without day-to-day involvement.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Professional Service</h4>
+                                <p>Expert management for your properties</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Local Expertise</h4>
+                                <p>Deep knowledge of Kampala property market</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Stress-Free</h4>
+                                <p>No day-to-day involvement needed</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Steady Income</h4>
+                                <p>Consistent rent collection and reporting</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="images/about.jpeg" alt="Modern Building in Kampala">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service 1: Tenant Management -->
+    <section class="services-section" id="service-1">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tenant Management</h2>
+                <p>Comprehensive tenant management solutions to ensure you have reliable, responsible tenants</p>
+            </div>
+            
+            <div class="service-detail">
+                <div class="service-image-large">
+                    <img src="images/tenant.jpeg" alt="Tenant Management">
+                </div>
+                <div class="service-description">
+                    <h3>Professional Tenant Management</h3>
+                    <p>We handle all aspects of tenant management to ensure your property is occupied by responsible, reliable tenants who pay on time and take good care of your investment.</p>
+                    <ul>
+                        <li>Tenant sourcing & placement</li>
+                        <li>Comprehensive tenant screening</li>
+                        <li>Professional lease management</li>
+                        <li>Handling tenant concerns professionally</li>
+                        <li>Regular tenant communication</li>
+                        <li>Move-in/move-out inspections</li>
+                        <li>Deposit handling and disputes resolution</li>
+                        <li>Tenant retention strategies</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Inquire About This Service</a>
+                </div>
+            </div>
+            
+            <div class="service-gallery-section">
+                <h3 class="gallery-title">Our Tenant Management Portfolio</h3>
+                <div class="service-gallery" id="tenant-gallery">
+                    <!-- 10 images for Tenant Management with descriptions -->
+                    <div class="gallery-item">
+                        <img src="images/screen.jpeg" alt="Tenant Screening Process">
+                        <div class="gallery-overlay">
+                            <span>Tenant Screening</span>
+                            <div class="gallery-description">Comprehensive background checks for reliable tenants</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (3).jpeg" alt="Lease Signing">
+                        <div class="gallery-overlay">
+                            <span>Lease Signing</span>
+                           
+                            <div class="gallery-description">Professional lease agreement documentation process</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (4).jpeg" alt="Tenant Interview">
+                        <div class="gallery-overlay">
+                            <span>Tenant Interview</span>
+                            <div class="gallery-description">Personal interviews to assess tenant suitability</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (5).jpeg" alt="Property Viewing">
+                        <div class="gallery-overlay">
+                            <span>Property Viewing</span>
+                            <div class="gallery-description">Organized property tours for prospective tenants</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (6).jpeg" alt="Background Checks">
+                        <div class="gallery-overlay">
+                            <span>Background Checks</span>
+                            <div class="gallery-description">Thorough verification of tenant history and references</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (7).jpeg" alt="Document Verification">
+                        <div class="gallery-overlay">
+                            <span>Document Verification</span>
+                            <div class="gallery-description">Meticulous checking of identification and supporting documents</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (8).jpeg" alt="Reference Checking">
+                        <div class="gallery-overlay">
+                            <span>Reference Checking</span>
+                            <div class="gallery-description">Contacting previous landlords for tenant references</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (9).jpeg" alt="Tenant Database">
+                        <div class="gallery-overlay">
+                            <span>Tenant Database</span>
+                            <div class="gallery-description">Organized digital records of all tenant information</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (10).jpeg" alt="Move-in Inspection">
+                        <div class="gallery-overlay">
+                            <span>Move-in Inspection</span>
+                            <div class="gallery-description">Detailed property condition documentation at move-in</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (11).jpeg" alt="Tenant Relations">
+                        <div class="gallery-overlay">
+                            <span>Tenant Relations</span>
+                            <div class="gallery-description"><h7>Professional communication and relationship management,<h7/></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service 2: Rent Collection -->
+    <section class="services-section" id="service-2">
+        <div class="container">
+            <div class="section-title">
+                <h2>Rent Collection</h2>
+                <p>Efficient and reliable rent collection systems to ensure consistent income</p>
+            </div>
+            
+            <div class="service-detail reverse">
+                <div class="service-image-large">
+                    <img src="images/hero3.jpeg" alt="Rent Collection">
+                </div>
+                <div class="service-description">
+                    <h3>Professional Rent Collection</h3>
+                    <p>Our systematic approach to rent collection ensures you receive your income on time, every time, with detailed reporting and follow-up on any late payments.</p>
+                    <ul>
+                        <li>Timely rent collection from tenants</li>
+                        <li>Automated payment reminders</li>
+                        <li>Follow-up on late payments</li>
+                        <li>Monthly reporting to landlords</li>
+                        <li>Secure payment handling</li>
+                        <li>Multiple payment methods accepted</li>
+                        <li>Digital payment records</li>
+                        <li>Annual rent review and adjustments</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Inquire About This Service</a>
+                </div>
+            </div>
+            
+            <div class="service-gallery-section">
+                <h3 class="gallery-title">Our Rent Collection System</h3>
+                <div class="service-gallery" id="rent-gallery">
+                    <!-- 10 images for Rent Collection with descriptions -->
+                    <div class="gallery-item">
+                        <img src="images/1 (13).jpeg" alt="Digital Payments">
+                        <div class="gallery-overlay">
+                            <span>Digital Payments</span>
+                            <div class="gallery-description">Secure online payment processing for tenant convenience</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (14).jpeg" alt="Payment Processing">
+                        <div class="gallery-overlay">
+                            <span>Payment Processing</span>
+                            <div class="gallery-description">Efficient handling of all rent payment transactions</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (15).jpeg" alt="Bank Transfers">
+                        <div class="gallery-overlay">
+                            <span>Bank Transfers</span>
+                            <div class="gallery-description">Direct bank transfers for secure rent collection</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (16).jpeg" alt="Payment Tracking">
+                        <div class="gallery-overlay">
+                            <span>Payment Tracking</span>
+                            <div class="gallery-description">Real-time monitoring of all rental payments</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (17).jpeg" alt="Receipt Generation">
+                        <div class="gallery-overlay">
+                            <span>Receipt Generation</span>
+                            <div class="gallery-description">Automatic generation of digital payment receipts</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (18).jpeg" alt="Financial Reporting">
+                        <div class="gallery-overlay">
+                            <span>Financial Reporting</span>
+                            <div class="gallery-description">Detailed monthly financial reports for landlords</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (19).jpeg" alt="Payment Analytics">
+                        <div class="gallery-overlay">
+                            <span>Payment Analytics</span>
+                            <div class="gallery-description">Analysis of payment patterns and trends</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (20).jpeg" alt="Automated Reminders">
+                        <div class="gallery-overlay">
+                            <span>Automated Reminders</span>
+                            <div class="gallery-description">Systematic reminders for upcoming rent payments</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (21).jpeg" alt="Collection Strategy">
+                        <div class="gallery-overlay">
+                            <span>Collection Strategy</span>
+                            <div class="gallery-description">Effective approaches for timely rent collection</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/financial statement.jpeg" alt="Financial Statements">
+                        <div class="gallery-overlay">
+                            <span>Financial Statements</span>
+                            <div class="gallery-description">Comprehensive financial documentation for property owners</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service 3: Property Maintenance -->
+    <section class="services-section" id="service-3">
+        <div class="container">
+            <div class="section-title">
+                <h2>Property Maintenance</h2>
+                <p>Professional property maintenance to protect and enhance your investment value</p>
+            </div>
+            
+            <div class="service-detail">
+                <div class="service-image-large">
+                    <img src="images/1 (23).jpeg" alt="Property Maintenance">
+                </div>
+                <div class="service-description">
+                    <h3>Comprehensive Property Maintenance</h3>
+                    <p>We provide complete property maintenance services to ensure your property remains in excellent condition, protecting your investment and ensuring tenant satisfaction.</p>
+                    <ul>
+                        <li>Routine property inspections</li>
+                        <li>Coordinating repairs & maintenance</li>
+                        <li>Working with trusted service providers</li>
+                        <li>Emergency repair coordination</li>
+                        <li>Preventative maintenance planning</li>
+                        <li>Regular property condition reports</li>
+                        <li>Landscaping and exterior maintenance</li>
+                        <li>Plumbing, electrical, and HVAC maintenance</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Inquire About This Service</a>
+                </div>
+            </div>
+            
+            <div class="service-gallery-section">
+                <h3 class="gallery-title">Our Maintenance Services</h3>
+                <div class="service-gallery" id="maintenance-gallery">
+                    <!-- 10 images for Property Maintenance with descriptions -->
+                    <div class="gallery-item">
+                        <img src="images/property inspection.jpeg" alt="Property Inspection">
+                        <div class="gallery-overlay">
+                            <span>Property Inspection</span>
+                            <div class="gallery-description">Regular property assessments to identify maintenance needs</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (25).jpeg" alt="Repair Coordination">
+                        <div class="gallery-overlay">
+                            <span>Repair Coordination</span>
+                            <div class="gallery-description">Efficient organization of repair work with trusted contractors</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/plumbing services.jpeg" alt="Plumbing Services">
+                        <div class="gallery-overlay">
+                            <span>Plumbing Services</span>
+                            <div class="gallery-description">Expert plumbing repairs and maintenance services</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/electric work.jpeg" alt="Electrical Work">
+                        <div class="gallery-overlay">
+                            <span>Electrical Work</span>
+                            <div class="gallery-description">Professional electrical system maintenance and repairs</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (28).jpeg" alt="HVAC Maintenance">
+                        <div class="gallery-overlay">
+                            <span>HVAC Maintenance</span>
+                            <div class="gallery-description">Heating and cooling system servicing for optimal performance</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/carpentry work.jpeg" alt="Carpentry Work">
+                        <div class="gallery-overlay">
+                            <span>Carpentry Work</span>
+                            <div class="gallery-description">Quality carpentry repairs and custom woodwork</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/painting.jpeg" alt="Painting Services">
+                        <div class="gallery-overlay">
+                            <span>Painting Services</span>
+                            <div class="gallery-description">Professional interior and house renovation</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (31).jpeg" alt="Landscaping">
+                        <div class="gallery-overlay">
+                            <span>Landscaping</span>
+                            <div class="gallery-description">Beautiful outdoor space maintenance and improvement</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/clean.jpeg" alt="Cleaning Services">
+                        <div class="gallery-overlay">
+                            <span>Cleaning Services</span>
+                            <div class="gallery-description">Regular professional cleaning for property upkeep</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (33).jpeg" alt="Emergency Repairs">
+                        <div class="gallery-overlay">
+                            <span>Emergency Repairs</span>
+                            <div class="gallery-description">24/7 emergency response for urgent maintenance issues</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service 4: Residential & Commercial Management -->
+    <section class="services-section" id="service-4">
+        <div class="container">
+            <div class="section-title">
+                <h2>Residential & Commercial Management</h2>
+                <p>Specialized management for all types of residential and commercial properties</p>
+            </div>
+            
+            <div class="service-detail reverse">
+                <div class="service-image-large">
+                    <img src="images/1 (34).jpeg" alt="Residential & Commercial Management">
+                </div>
+                <div class="service-description">
+                    <h3>Complete Property Portfolio Management</h3>
+                    <p>Whether you own apartments, houses, office spaces, or commercial buildings, we provide specialized management services tailored to each property type.</p>
+                    <ul>
+                        <li>Apartments & houses management</li>
+                        <li>Office spaces management</li>
+                        <li>Shops & commercial buildings</li>
+                        <li>Mixed-use properties</li>
+                        <li>Retail space management</li>
+                        <li>Warehouse and storage facilities</li>
+                        <li>Industrial property management</li>
+                        <li>Vacation rental management</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Inquire About This Service</a>
+                </div>
+            </div>
+            
+            <div class="service-gallery-section">
+                <h3 class="gallery-title">Our Property Portfolio</h3>
+                <div class="service-gallery" id="residential-gallery">
+                    <!-- 10 images for Residential & Commercial Management with descriptions -->
+                    <div class="gallery-item">
+                        <img src="images/apartment.jpeg" alt="Apartment Complex">
+                        <div class="gallery-overlay">
+                            <span>Apartment Complex</span>
+                            <div class="gallery-description">Professional management of multi-unit residential buildings</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/ssingle family homes.jpeg" alt="Single Family Homes">
+                        <div class="gallery-overlay">
+                            <span>Single Family Homes</span>
+                            <div class="gallery-description">Dedicated management for individual residential properties</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/OFF.jpeg" alt="Office Buildings">
+                        <div class="gallery-overlay">
+                            <span>Office Buildings</span>
+                            <div class="gallery-description">Specialized management for corporate office spaces</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (38).jpeg" alt="Retail Spaces">
+                        <div class="gallery-overlay">
+                            <span>AIR BNB</span>
+                            <div class="gallery-description">luxurious air bnb</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (39).jpeg" alt="Commercial Complex">
+                        <div class="gallery-overlay">
+                            <span>Commercial Complex</span>
+                            <div class="gallery-description">Comprehensive management of mixed commercial properties</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (40).jpeg" alt="Mixed-Use Development">
+                        <div class="gallery-overlay">
+                            <span>Mixed-Use Development</span>
+                            <div class="gallery-description">Integrated management of residential and commercial spaces</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/industrial property.jpeg" alt="Industrial Property">
+                        <div class="gallery-overlay">
+                            <span>Industrial Property</span>
+                            <div class="gallery-description">Specialized management for factories and warehouses</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (42).jpeg" alt="Vacation Rentals">
+                        <div class="gallery-overlay">
+                            <span>Vacation Rentals</span>
+                            <div class="gallery-description">Short-term rental management for holiday properties</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/warehousefacility.jpeg" alt="Warehouse Facilities">
+                        <div class="gallery-overlay">
+                            <span>Warehouse Facilities</span>
+                            <div class="gallery-description">Management of storage and distribution facilities</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (26).jpeg" alt="Gated Communities">
+                        <div class="gallery-overlay">
+                            <span>Gated Communities</span>
+                            <div class="gallery-description">Comprehensive management of secure residential communities</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service 5: Additional Services -->
+    <section class="services-section" id="service-5">
+        <div class="container">
+            <div class="section-title">
+                <h2>Additional Services</h2>
+                <p>Comprehensive real estate solutions beyond property management</p>
+            </div>
+            
+            <div class="service-detail">
+                <div class="service-image-large">
+                    <img src="images/real.jpeg" alt="Additional Services">
+                </div>
+                <div class="service-description">
+                    <h3>Extended Real Estate Solutions</h3>
+                    <p>Beyond property management, we offer a range of additional services to support your real estate investment journey in Uganda.</p>
+                    <ul>
+                        <li>Real estate consultancy and investment advice</li>
+                        <li>Professional house plan preparation</li>
+                        <li>Surveying and land measurement services</li>
+                        <li>Land search and title transfer assistance</li>
+                        <li>Cleaning and fumigation services</li>
+                        <li>Property valuation and appraisal</li>
+                        <li>Real estate market research</li>
+                        <li>Investment portfolio analysis</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Inquire About This Service</a>
+                </div>
+            </div>
+            
+            <div class="service-gallery-section">
+                <h3 class="gallery-title">Our Additional Services Portfolio</h3>
+                <div class="service-gallery" id="additional-gallery">
+                    <!-- 10 images for Additional Services with descriptions -->
+                    <div class="gallery-item">
+                        <img src="images/real.jpeg" alt="Real Estate Consultancy">
+                        <div class="gallery-overlay">
+                            <span>Real Estate Consultancy</span>
+                            <div class="gallery-description">Expert advice on property investment strategies</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/hoseplan.jpeg" alt="House Plan Design">
+                        <div class="gallery-overlay">
+                            <span>House Plan Design</span>
+                            <div class="gallery-description">Custom architectural design services for residential properties</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (48).jpeg" alt="Surveying Services">
+                        <div class="gallery-overlay">
+                            <span>Surveying Services</span>
+                            <div class="gallery-description">Professional land measurement and boundary marking</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/land search.jpeg" alt="Land Search">
+                        <div class="gallery-overlay">
+                            <span>Land Search</span>
+                            <div class="gallery-description">Comprehensive property title verification services</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/titl1e.JPG" alt="Title Transfers">
+                        <div class="gallery-overlay">
+                            <span>Title Transfers</span>
+                            <div class="gallery-description">Assistance with property ownership transfer processes</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/clean.jpeg" alt="Cleaning Services">
+                        <div class="gallery-overlay">
+                            <span>Cleaning Services</span>
+                            <div class="gallery-description">Professional cleaning for all properties</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/fumi.jpeg" alt="Fumigation">
+                        <div class="gallery-overlay">
+                            <span>Fumigation</span>
+                            <div class="gallery-description">Professional pest control and fumigation services</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/propertyvaluation.jpeg" alt="Property Valuation">
+                        <div class="gallery-overlay">
+                            <span>Property Valuation</span>
+                            <div class="gallery-description">Accurate property value assessment services</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (54).jpeg" alt="Market Research">
+                        <div class="gallery-overlay">
+                            <span>Market Research</span>
+                            <div class="gallery-description">Comprehensive real estate market analysis and reports</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/1 (55).jpeg" alt="Investment Analysis">
+                        <div class="gallery-overlay">
+                            <span>Investment Analysis</span>
+                            <div class="gallery-description">Detailed analysis of property investment opportunities</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-us" id="why-us">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Why Work With Us</h2>
+                <p>Experience the difference with our professional property management services</p>
+            </div>
+            
+            <div class="why-cards">
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Professional & Trustworthy</h3>
+                    <p>We provide reliable, professional service you can trust with your valuable investments.</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Clear Communication</h3>
+                    <p>Regular updates and transparent reporting keep you informed about your property's status.</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Reduced Landlord Stress</h3>
+                    <p>We handle all the day-to-day management, so you can enjoy passive income without the hassle.</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Consistent Income</h3>
+                    <p>Timely rent collection and follow-up ensure you receive steady income from your properties.</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Local Market Knowledge</h3>
+                    <p>Deep understanding of Kampala's property market helps maximize your investment returns.</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Long-Term Partnerships</h3>
+                    <p>We build lasting relationships with landlords based on trust and exceptional service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Contact Us</h2>
+                <p>Get in touch with us for professional property management services</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Our Location</h4>
+                            <h7>Ntinda, Kampala, Uganda</h7>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Phone Number</h4>
+                            <h7>+256 771 961 358</h7>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <h7>+256 703 756 234</h7>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email Address</h4>
+                            <h7>ticber2@gmail.com</h7>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/1CNQDqtbur/?mibextid=wwXIfr" target="_blank" class="social-icon-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/tic_ber2?s=11" target="_blank" class="social-icon-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/ticberestateslimited?igsh=MTZ4OWp4cnNjYnR2MQ%3D%3D&utm_source=qr" target="_blank" class="social-icon-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/tic-ber-estates-limited/" target="_blank" class="social-icon-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@tic.ber.estates.l?_r=1&_t=ZS-93PqRQuo9Z7" target="_blank" class="social-icon-link">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Your Name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Your Email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="tel" id="phone" placeholder="Your Phone Number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select id="service" required>
+                                <option value="" disabled selected>Select Service Interested In</option>
+                                <option value="Tenant Management">Tenant Management</option>
+                                <option value="Rent Collection">Rent Collection</option>
+                                <option value="Property Maintenance">Property Maintenance</option>
+                                <option value="Residential & Commercial Management">Residential & Commercial Management</option>
+                                <option value="Additional Services">Additional Services</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" placeholder="Your Message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Send via WhatsApp</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Tic Ber Estates Ltd</h3>
+                    <p>"Invest Smart. Live Better."</p>
+                    <p>Professional property management solutions in Kampala.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#service-1">Tenant Management</a></li>
+                        <li><a href="#service-2">Rent Collection</a></li>
+                        <li><a href="#service-3">Property Maintenance</a></li>
+                        <li><a href="#service-4">Residential & Commercial</a></li>
+                        <li><a href="#service-5">Additional Services</a></li>
+                        <li><a href="#why-us">Why Choose Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-services">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#service-1">Tenant Management</a></li>
+                        <li><a href="#service-2">Rent Collection</a></li>
+                        <li><a href="#service-3">Property Maintenance</a></li>
+                        <li><a href="#service-4">Residential & Commercial</a></li>
+                        <li><a href="#service-5">Additional Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contact Info</h4>
+                    <h7><i class="fas fa-map-marker-alt" ></i> Ntinda, Kampala, Uganda</h7>
+                    <br>
+                    <h7><i class="fas fa-phone-alt" ></i> +256 771 961 358</h7>
+                    <br>
+                    <h7><i class="fas fa-envelope" ></i> ticber2@gmail.com</h7>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <h7>&copy; 2023 Tic BER Estates Ltd. All Rights Reserved.</h7>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for image gallery -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="modal-nav">
+                <button class="modal-nav-btn" id="prevImage"><i class="fas fa-chevron-left"></i></button>
+                <button class="modal-nav-btn" id="nextImage"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <img src="" alt="" class="modal-img" id="modalImg">
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-description" id="modalDescription"></div>
+        </div>
+    </div>
+
+    <script>
+        // Property Service Videos Data
+        const serviceVideos = [
+            {
+                id: 0,
+                title: "House for Rent",
+                subtitle: "in any area",
+                description: "Find your perfect rental property with our comprehensive house hunting services across Kampala.",
+                videoUrl: "images/hero.mp4"
+            },
+            {
+                id: 1,
+                title: "Property Management",
+                subtitle: "Full Service",
+                description: "Professional property management services including tenant placement, rent collection, and maintenance.",
+                videoUrl: "images/hero1.mp4"
+            },
+            {
+                id: 2,
+                title: "Real Estate Consultancy",
+                subtitle: "Investment Advice",
+                description: "Expert guidance on property investments to maximize your returns in Kampala's real estate market.",
+                videoUrl: "images/hero2.mp4"
+            }
+        ];
+
+        // Gallery data for each service with descriptions
+        const serviceGalleries = {
+            'tenant': [
+                { src: 'images/screen.jpeg', title: 'Tenant Screening', description: 'Background checks for reliable tenants' },
+                { src: 'images/1 (12).jpeg', title: 'Lease Signing', description: 'lease agreement documentation process' },
+                { src: 'images/1 (13).jpeg', title: 'Tenant Interview', description: 'Personal interviews to assess tenant suitability' },
+                { src: 'images/1 (14).jpeg', title: 'Property Viewing', description: 'Organized property tours for prospective tenants' },
+                { src: 'images/1 (15).jpeg', title: 'Background Checks', description: 'Verification of tenant history and references' },
+                { src: 'images/1 (16).jpeg', title: 'Document Verification', description: 'Meticulous checking of identification  documents' },
+                { src: 'images/1 (17).jpeg', title: 'Reference Checking', description: 'Contacting previous landlords for tenant references' },
+                { src: 'images/1 (18).jpeg', title: 'Tenant Database', description: 'Organized digital records of all tenant information' },
+                { src: 'images/1 (19).jpeg', title: 'Move-in Inspection', description: 'Property condition documentation at move-in' },
+                { src: 'images/1 (20).jpeg', title: 'Tenant Relations', description: 'Communication and relationship management' }
+            ],
+            'rent': [
+                { src: 'images/1 (1).jpeg', title: 'Digital Payments', description: '' },
+                { src: 'images/1 (2).jpeg', title: 'Payment Processing', description: 'Efficient handling of all rent payment transactions' },
+                { src: 'images/1 (3).jpeg', title: 'Bank Transfers', description: 'Direct bank transfers for secure rent collection' },
+                { src: 'images/1 (4).jpeg', title: 'Payment Tracking', description: 'Real-time monitoring of all rental payments' },
+                { src: 'images/1 (5).jpeg', title: 'Receipt Generation', description: 'Automatic generation of digital payment receipts' },
+                { src: 'images/1 (6).jpeg', title: 'Financial Reporting', description: 'Detailed monthly financial reports 4 landlords' },
+                { src: 'images/1 (7).jpeg', title: 'Payment Analytics', description: 'Analysis of payment patterns and trends' },
+                { src: 'images/1 (8).jpeg', title: 'Automated Reminders', description: 'Systematic reminders for upcoming rent payments' },
+                { src: 'images/1 (9).jpeg', title: 'Collection Strategy', description: 'Effective approaches for timely rent collection' },
+                { src: 'images/financial statement.jpeg', title: 'Financial Statements', description: 'Financial documentation for property owners' }
+            ],
+            'maintenance': [
+                { src: 'images/property inspection.jpeg', title: 'Property Inspection', description: '' },
+                { src: 'images/1 (22).jpeg', title: 'Repair Coordination', description: '' },
+                { src: 'images/plumbing services.jpeg', title: 'Plumbing Services', description: 'Expert plumbing repairs and maintenance services' },
+                { src: 'images/electric work.jpeg', title: 'Electrical Work', description: '' },
+                { src: 'images/1 (25).jpeg', title: 'HVAC Maintenance', description: '' },
+                { src: 'images/carpentry work.jpeg', title: 'Carpentry Work', description: 'Quality carpentry repairs and custom woodwork' },
+                { src: 'images/painting.jpeg', title: 'Painting Services', description: 'Professional interior and house renovation services' },
+                { src: 'images/1 (28).jpeg', title: 'Landscaping', description: '' },
+                { src: 'images/clean.jpeg', title: 'Cleaning Services', description: 'Regular professional cleaning for property upkeep' },
+                { src: 'images/1 (30).jpeg', title: 'Emergency Repairs', description: '' }
+            ],
+            'residential': [
+                { src: 'images/apartment.jpeg', title: 'Apartment Complex', description: '' },
+                { src: 'images/ssingle family homes.jpeg', title: 'Single Family Homes', description: '' },
+               
+                { src: 'images/1 (34).jpeg', title: 'Air Bnb', description: 'luxurious air bnb' },
+                { src: 'images/1 (35).jpeg', title: 'Commercial Complex', description: 'Management of mixed commercial properties' },
+                { src: 'images/1 (36).jpeg', title: 'Mixed-Use Development', description: 'Management of residential and commercial spaces' },
+                { src: 'images/industrial property.jpeg', title: 'Industrial Property', description: '' },
+                { src: 'images/1 (38).jpeg', title: 'Vacation Rentals', description: '' },
+                
+                { src: 'images/1 (26).jpeg', title: 'Gated Communities', description: '' }
+            ],
+            'additional': [
+                { src: 'images/real.jpeg', title: 'Real Estate Consultancy', description: 'Expert advice on property investment strategies' },
+                { src: 'images/hoseplan.jpeg', title: 'House Plan Design', description: '' },
+                { src: 'images/1 (43).jpeg', title: 'Surveying Services', description: '' },
+                { src: 'images/land search.jpeg', title: 'Land Search', description: 'Comprehensive property title verification services' },
+                { src: 'images/titl1e.JPG', title: 'Title Transfers', description: '' },
+                { src: 'images/clean.jpeg', title: 'Cleaning Services', description: 'Professional cleaning  for all properties' },
+                { src: 'images/fumi.jpeg', title: 'Fumigation', description: 'Professional pest control and fumigation services' },
+                { src: 'images/propertyvaluation.jpeg', title: 'Property Valuation', description: '' },
+                { src: 'images/1 (49).jpeg', title: 'Market Research', description: '' },
+                { src: 'images/1 (50).jpeg', title: 'Investment Analysis', description: '' }
+            ]
+        };
+
+        // Current state
+        let currentServiceIndex = 0;
+        let isServiceLoading = false;
+        let currentGallery = null;
+        let currentImageIndex = 0;
+        
+        // DOM Elements
+        const loadingScreen = document.getElementById('loading-screen');
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingPercentage = document.getElementById('loading-percentage');
+        const heroVideo = document.getElementById('heroVideo');
+        const serviceIndex = document.getElementById('service-index');
+        const prevServiceBtn = document.getElementById('prev-service');
+        const nextServiceBtn = document.getElementById('next-service');
+        const serviceLoading = document.getElementById('serviceLoading');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const header = document.querySelector('header');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
+
+        const closeModal = document.getElementById('closeModal');
+        const prevImageBtn = document.getElementById('prevImage');
+        const nextImageBtn = document.getElementById('nextImage');
+        const socialFabs = document.getElementById('socialFabs');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up event listeners
+            prevServiceBtn.addEventListener('click', goToPrevService);
+            nextServiceBtn.addEventListener('click', goToNextService);
+            
+            // Mobile menu toggle function
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideNav = navLinks.contains(event.target);
+                const isClickOnMenuBtn = mobileMenuBtn.contains(event.target);
+                
+                if (!isClickInsideNav && !isClickOnMenuBtn && navLinks.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+            });
+            
+            // Video loading handler
+            heroVideo.addEventListener('loadeddata', function() {
+                console.log('Video loaded successfully');
+                loadingBar.style.width = '100%';
+                loadingPercentage.textContent = '100%';
+                
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 800);
+                }, 500);
+                
+                serviceLoading.style.opacity = '0';
+            });
+            
+            heroVideo.addEventListener('error', function() {
+                console.error('Video failed to load');
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 800);
+                serviceLoading.style.opacity = '0';
+            });
+            
+            // Simulate loading complete after 3 seconds (fallback)
+            setTimeout(() => {
+                if (loadingScreen.style.display !== 'none') {
+                    loadingBar.style.width = '100%';
+                    loadingPercentage.textContent = '100%';
+                    
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 800);
+                    }, 500);
+                }
+            }, 3000);
+            
+            // Setup gallery functionality
+            setupServiceGalleries();
+            
+            // Contact form submission to WhatsApp
+            setupContactForm();
+            
+            // Smooth scrolling
+            setupSmoothScrolling();
+            
+            // Scroll effect for video
+            setupScrollEffect();
+            
+            // Keyboard navigation
+            setupKeyboardNavigation();
+            
+            // Setup social FABs hide on mobile
+            checkMobileAndHideFABs();
+            window.addEventListener('resize', checkMobileAndHideFABs);
+        });
+
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const isActive = navLinks.classList.toggle('active');
+            
+            // Update button icon
+            if (isActive) {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+                mobileMenuBtn.style.color = 'var(--secondary-color)';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenuBtn.style.color = 'var(--primary-color)';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+        }
+
+        function closeMobileMenu() {
+            navLinks.classList.remove('active');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            mobileMenuBtn.style.color = 'var(--primary-color)';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Load service video
+        function loadService(serviceIndex) {
+            const service = serviceVideos[serviceIndex];
+            
+            // Show loading indicator for service switching
+            if (serviceIndex !== currentServiceIndex) {
+                serviceLoading.style.opacity = '1';
+            }
+            
+            // Update UI text with fade animation
+            updateServiceInfo(service);
+            
+            // Change video source
+            heroVideo.src = service.videoUrl;
+            heroVideo.load();
+            
+            // Try to play
+            heroVideo.play().catch(e => {
+                console.log("Autoplay prevented:", e);
+            });
+            
+            currentServiceIndex = serviceIndex;
+        }
+
+        // Update service information with fade animation
+        function updateServiceInfo(service) {
+            const heroContent = document.querySelector('.hero-content');
+            
+            // Fade out
+            heroContent.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Update content
+                document.querySelector('.hero-content h1').textContent = service.title;
+                document.querySelector('.motto').textContent = `"${service.subtitle}"`;
+                document.querySelector('.hero-content p').textContent = service.description;
+                serviceIndex.textContent = (service.id + 1).toString().padStart(2, '0');
+                
+                // Fade in
+                setTimeout(() => {
+                    heroContent.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+
+        // Go to previous service
+        function goToPrevService() {
+            if (isServiceLoading) return;
+            
+            currentServiceIndex--;
+            if (currentServiceIndex < 0) {
+                currentServiceIndex = serviceVideos.length - 1;
+            }
+            
+            loadService(currentServiceIndex);
+        }
+
+        // Go to next service
+        function goToNextService() {
+            if (isServiceLoading) return;
+            
+            currentServiceIndex++;
+            if (currentServiceIndex >= serviceVideos.length) {
+                currentServiceIndex = 0;
+            }
+            
+            loadService(currentServiceIndex);
+        }
+
+        // Setup service galleries
+        function setupServiceGalleries() {
+            // Open modal when clicking on gallery images
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const galleryId = this.closest('.service-gallery').id;
+                    const serviceType = galleryId.replace('-gallery', '');
+                    currentGallery = serviceType;
+                    
+                    // Find clicked image index
+                    const images = this.parentElement.querySelectorAll('.gallery-item');
+                    currentImageIndex = Array.from(images).indexOf(this);
+                    
+                    // Open modal with clicked image
+                    openModalWithImage();
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', closeModalFunction);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModalFunction();
+                }
+            });
+            
+            // Modal navigation
+            prevImageBtn.addEventListener('click', showPrevImage);
+            nextImageBtn.addEventListener('click', showNextImage);
+        }
+
+        function openModalWithImage() {
+            if (!currentGallery || !serviceGalleries[currentGallery]) return;
+            
+            const imageData = serviceGalleries[currentGallery][currentImageIndex];
+            modalImg.src = imageData.src;
+            modalTitle.textContent = imageData.title;
+            modalDescription.textContent = imageData.description;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalFunction() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showPrevImage() {
+            if (!currentGallery || !serviceGalleries[currentGallery]) return;
+            
+            currentImageIndex--;
+            if (currentImageIndex < 0) {
+                currentImageIndex = serviceGalleries[currentGallery].length - 1;
+            }
+            
+            const imageData = serviceGalleries[currentGallery][currentImageIndex];
+            modalImg.src = imageData.src;
+            modalTitle.textContent = imageData.title;
+            modalDescription.textContent = imageData.description;
+        }
+
+        function showNextImage() {
+            if (!currentGallery || !serviceGalleries[currentGallery]) return;
+            
+            currentImageIndex++;
+            if (currentImageIndex >= serviceGalleries[currentGallery].length) {
+                currentImageIndex = 0;
+            }
+            
+            const imageData = serviceGalleries[currentGallery][currentImageIndex];
+            modalImg.src = imageData.src;
+            modalTitle.textContent = imageData.title;
+            modalDescription.textContent = imageData.description;
+        }
+
+        // Setup contact form to send to WhatsApp
+        function setupContactForm() {
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const service = document.getElementById('service').value;
+                const message = document.getElementById('message').value;
+                
+                // Format WhatsApp message
+                const whatsappMessage = `New Inquiry from Tic BER Estates Website:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nService Interested In: ${service}\nMessage: ${message}\n\nSent via Tic BER Estates Website`;
+                
+                // Encode the message for URL
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                
+                // WhatsApp phone number (Uganda)
+                const whatsappNumber = '256703756234';
+                
+                // Create WhatsApp URL
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                
+                // Open WhatsApp in new tab
+                window.open(whatsappUrl, '_blank');
+                
+                // Show confirmation message
+                alert(`Thank you ${name}! Your message is being sent to WhatsApp. Please complete the process in the WhatsApp window that opened.`);
+                
+                // Reset form
+                contactForm.reset();
+            });
+        }
+
+        // Setup smooth scrolling
+        function setupSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        closeMobileMenu();
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Setup scroll effect for video
+        function setupScrollEffect() {
+            let lastScrollY = window.scrollY;
+            let isThrottled = false;
+            
+            window.addEventListener('scroll', () => {
+                // Sticky header effect
+                if (window.scrollY > 100) {
+                    header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 5px 15px rgba(0, 84, 97, 0.1)';
+                } else {
+                    header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = '0 2px 10px rgba(0, 84, 97, 0.1)';
+                }
+                
+                // Video parallax effect (24fps)
+                if (!isThrottled) {
+                    const currentScrollY = window.scrollY;
+                    const heroSection = document.getElementById('home');
+                    
+                    if (currentScrollY < heroSection.offsetHeight) {
+                        // Subtle parallax effect at 24fps
+                        const parallaxOffset = currentScrollY * 0.3;
+                        heroVideo.style.transform = `translateY(${parallaxOffset}px)`;
+                    }
+                    
+                    lastScrollY = currentScrollY;
+                    isThrottled = true;
+                    
+                    // 24fps throttle (1000ms/24 ≈ 41.66ms)
+                    setTimeout(() => {
+                        isThrottled = false;
+                    }, 41.66);
+                }
+                
+                // Highlight active nav section
+                highlightNavSection();
+            });
+        }
+
+        // Highlight active navigation section
+        function highlightNavSection() {
+            const scrollPosition = window.scrollY + 100;
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        // Setup keyboard navigation
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    if (modal.classList.contains('active')) {
+                        showPrevImage();
+                    } else {
+                        goToPrevService();
+                    }
+                } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    if (modal.classList.contains('active')) {
+                        showNextImage();
+                    } else {
+                        goToNextService();
+                    }
+                } else if (e.key === 'Escape') {
+                    closeModalFunction();
+                    closeMobileMenu();
+                }
+            });
+        }
+
+        // Check if mobile and hide FABs
+        function checkMobileAndHideFABs() {
+            if (window.innerWidth <= 768) {
+                socialFabs.style.display = 'flex';
+            } else {
+                socialFabs.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
